@@ -1,0 +1,150 @@
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class MenuFicherosTexto {
+
+	public static void imprimirTabla(String[] lista)
+	{
+		System.out.println("Contenido de la tabla:");
+		for(int i=0;i<lista.length;i++)
+		{
+			System.out.println("Posición " + i + " : " + lista[i]); 
+		}
+	}	
+	
+	public static void inicializarTabla(String[] lista)
+	{
+		for(int i=0;i<lista.length;i++)
+		{
+			lista[i]="";
+		} 
+	}
+	
+	
+	public static int elegirOpcionMenu()
+	{
+		System.out.println("Opciones");
+		System.out.println("1. Escribir información - V1 con ;");
+		System.out.println("2. Leer información - V1 con ;");
+		System.out.println("7. Inicializar tabla nombres");
+		System.out.println("8. Escribir tabla nombres");
+		System.out.println("9. Fin");
+		System.out.println("Introduce opción: ");
+        Scanner scan = new Scanner(System.in);
+		int numero = scan.nextInt();
+		scan.reset();
+		return numero;
+	}
+
+	public static void escribirFicheroV1(String[] lista)
+	{
+		try 
+		{
+			// 1. Crear fichero
+			File fichero = new File("FicheroNombresV1.txt");
+			FileWriter ficheroEscritura = new FileWriter(fichero);
+			
+			// 2. Escribir nombres
+			for(int i=0;i<lista.length;i++)
+			{
+				ficheroEscritura.write(lista[i]);
+				if (i!=(lista.length-1))
+					ficheroEscritura.write(';');
+			}
+
+			// 3. Cerrar fichero.
+			ficheroEscritura.close();
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void inicializarChar(char[] tabla)
+	{
+		for(int i=0;i<tabla.length;i++)
+		{
+			tabla[i] = '\0';
+		}
+	}
+	
+	
+	public static void leerFicheroV1(String[] lista)
+	{
+		try 
+		{
+			// 1. Crear fichero
+			File fichero = new File("FicheroNombresV1.txt");
+			FileReader ficheroLectura = new FileReader(fichero);
+						
+			// 2. Leer nombres por bloques de 4 caracteres 
+			//    (se puede cambiar)   
+			char[] nombre = new char[4];
+			int res;
+			String cadenaFichero ="";
+			
+			inicializarChar(nombre);
+			res = ficheroLectura.read(nombre);
+			
+	
+			while (res != -1)
+			{
+				// Tratar la cadena
+				cadenaFichero += String.valueOf(nombre);
+				inicializarChar(nombre);
+				res = ficheroLectura.read(nombre);
+			}
+			// 3. Cerrar fichero.
+			ficheroLectura.close();
+			
+			// 4. Descomponer los campos: cadenaFichero --> c1;c2;c3
+			//        lista --> "  ", "   ", 
+			int j = 0;
+			for(int i=0;i<cadenaFichero.length();i++)
+				if (cadenaFichero.charAt(i) != ';' )
+					lista[j] = lista[j] + cadenaFichero.charAt(i); 
+				else
+					j++;
+			
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+
+	public static void main(String[] args)
+	{
+		String[] lista = {"Pepe", "Ana", "Juan" };
+
+		int opcion;
+		do
+		{
+			opcion = elegirOpcionMenu();
+			switch(opcion)
+			{
+			case 1: // Escribir fichero
+				escribirFicheroV1(lista);
+				break;
+			case 2: // Leer fichero
+				leerFicheroV1(lista);
+				break;
+			case 7: // Inicializar
+				inicializarTabla(lista);
+				break;
+			case 8: // Escribir tabla
+				imprimirTabla(lista);
+				break;
+			}
+		}while(opcion!=9);
+	}
+
+}
