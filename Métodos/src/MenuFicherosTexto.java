@@ -33,6 +33,7 @@ public class MenuFicherosTexto {
         Scanner scan = new Scanner(System.in);
 		int numero = scan.nextInt();
 		scan.reset();
+		scan.close();
 		return numero;
 	}
 
