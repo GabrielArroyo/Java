@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Persona {
 
@@ -41,6 +43,24 @@ public class Persona {
 	public void setEdad(int edad) {
 		this.edad = edad;
 	}
+	
+	public void escribirFichero(BufferedWriter f) {
+		
+		try {
+		f.write(nombre);
+		f.newLine();
+		f.write(apellido);
+		f.newLine();
+		f.write(String.valueOf(edad));
+		f.newLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	
 

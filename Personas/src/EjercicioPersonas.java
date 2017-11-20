@@ -7,6 +7,31 @@ import java.util.Scanner;
 
 public class EjercicioPersonas {
 
+	static void EscribirPersonasv2(Persona [] gente) {
+	
+	
+	try {
+		
+		File fichero = new File("Personas.txt");
+		FileWriter ficheroEscritura = new FileWriter(fichero);
+		BufferedWriter ficherobuffer = new BufferedWriter(ficheroEscritura);
+		
+		
+		for (int i = 0; i < gente.length; i++) {
+			gente[i].escribirFichero(ficherobuffer);
+		}
+		
+		ficherobuffer.close();
+		
+		
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+	}
+
 	static void EscribirPersonas(Persona [] gente) {
 	
 	
@@ -72,9 +97,6 @@ public class EjercicioPersonas {
 			e.printStackTrace();
 		}
 		
-		
-		
-		
 		}
 	
 	
@@ -103,11 +125,11 @@ public class EjercicioPersonas {
 		System.out.println("2º Leer Fichero");
 		System.out.println("3º Escribir Pantalla");
 		System.out.println("4º Vaciar Estructura");
-		System.out.println("5º Salir");
+		System.out.println("5º Escribir Fichero v2");
+		System.out.println("6º Salir");
 		Scanner scan = new Scanner(System.in);
 		int numero = scan.nextInt();
 		scan.reset();
-		scan.close();
 		return numero;
 	}
 	
@@ -134,10 +156,11 @@ public class EjercicioPersonas {
 		case 4:
 			Vaciar(gente);
 			break;
+		case 5:
+			EscribirPersonasv2(gente);
+			break;
 		}
-		}while(num != 5);
-		
-		
+		}while(num != 6);
 	
 	}
 
